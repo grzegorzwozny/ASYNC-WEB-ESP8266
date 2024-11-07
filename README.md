@@ -1,24 +1,28 @@
-# Micropython Asynchronous Non-blocking WebServer ESP8266
+# Micropython Async Non-blocking WebServer for ESP8266
 
-This is non blocking Web Server write in Micropython. The non-blocking mode of server operation is provided by the module select(). Layout based on Tasks and asynchronous I/O scheduler. Project include extra features like:
-- Real Time Clock (DS1307)
-- External IO Port Expander (MCP23017)
-- Pseudo-database JSON file
+This project is a non-blocking web server written in MicroPython for the ESP8266. Using the `select()` module for non-blocking I/O and an asynchronous task scheduler, it enables efficient, multitasking server operation. The project includes additional features such as:
+
+- Real-Time Clock (DS1307)
+- External I/O Port Expander (MCP23017)
+- JSON-based pseudo-database
 - Custom command parser
 - Independent tasks
 
-## Layout
-The application consists of three threads. The first thread is responsible for handling the server in non-blocking mode. The second thread handles I / O ports. The third thread monitors the state of the application.
+## Architecture
+The application consists of three main threads:
+1. **Server Thread**: Manages the web server in non-blocking mode.
+2. **I/O Management Thread**: Handles input/output port operations.
+3. **Monitoring Thread**: Supervises application state and performance.
 
-Ultimately, the application was designed to support the hardware layer of the driver. The controller has six output channels (relay control). Additionally, the controller is equipped with an input to which you can connect a limit switch and check e.g. the door status. In addition, the controller includes a real-time clock that provides information about the current date and time in the system. The RTC clock was used to implement two operating modes.
+The application is designed to manage a hardware controller with six output channels (for relay control), and an input for monitoring a limit switch (e.g., for door status). A real-time clock (RTC) provides date and time, enabling two distinct operating modes.
 
-## Application operating modes
-The application has a continuous operation mode. It consists in activating the timer for a specified period of time, e.g. 60 seconds. At the moment of the start, the appropriate controller output (relay) is set high. After the set time has elapsed, the controller changes the relay status to low.
-
-The second operating mode is the scheduler mode. It is possible to configure the device in such a way that on a given day in a given time period (from an hour to an hour) the controller turns on the appropriate channels. Seven items can be programmed (suitable for each day of the week).
+## Operating Modes
+1. **Continuous Mode**: Activates a timer for a defined period (e.g., 60 seconds) to control relay outputs. When the timer starts, the relay is set to "on," and after the period ends, it automatically turns "off."
+   
+2. **Scheduler Mode**: Allows configuration to activate specific channels based on day and time (e.g., from hour to hour on specific days). Up to seven schedules can be programmed, one for each day of the week.
 
 ## Demo
-https://youtu.be/OatHs5Z4SgE
+Check out the demo here: [Demo Video](https://youtu.be/OatHs5Z4SgE)
 
-## Final remarks
-The device hardware layer could not be published.
+## Note
+The hardware layer for this device is proprietary and cannot be shared.
